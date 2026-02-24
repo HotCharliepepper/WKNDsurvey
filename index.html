@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>WKNDMOOD × MASHCORE: Perception Engineering</title>
+    <style>
+        :root {
+            --slate-950: #020617;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-400: #94a3b8;
+            --amber-500: #f59e0b;
+            --amber-900: #78350f;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent-bg: rgba(245, 158, 11, 0.05);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--slate-950);
+            color: #f8fafc;
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 20px 15px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .art-canvas {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+            border: 1px solid var(--border);
+            background: radial-gradient(circle at top right, var(--slate-800), var(--slate-900));
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+        }
+
+        /* Tactical HUD Elements */
+        .hud-line { position: absolute; background: var(--amber-500); opacity: 0.4; }
+        .top-l { top: 20px; left: 20px; width: 60px; height: 1px; }
+        .top-v { top: 20px; left: 20px; width: 1px; height: 60px; }
+        .bottom-r { bottom: 20px; right: 20px; width: 60px; height: 1px; }
+        .bottom-v { bottom: 20px; right: 20px; width: 1px; height: 60px; }
+
+        .header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+
+        .brand-tag {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--slate-950);
+            background: var(--amber-500);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+            word-break: keep-all;
+        }
+
+        .meta {
+            font-size: 13px;
+            color: var(--slate-400);
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 2px solid var(--slate-700);
+        }
+        .meta b { color: #fff; }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 1.2rem;
+            color: var(--amber-500);
+            border-bottom: 1px dashed var(--slate-700);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .sub-text {
+            font-size: 13px;
+            color: var(--slate-400);
+            margin-bottom: 16px;
+            word-break: keep-all;
+        }
+
+        .box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .box.highlight {
+            border-color: rgba(245, 158, 11, 0.3);
+            background: var(--accent-bg);
+        }
+
+        .box h3 {
+            margin: 0 0 12px 0;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        ul, ol { margin: 0; padding-left: 20px; color: #e2e8f0; font-size: 14px; }
+        li { margin-bottom: 8px; }
+        li::marker { color: var(--amber-500); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        /* Keyword Cards */
+        .k-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--slate-700);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .k-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .k-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rank {
+            width: 24px;
+            height: 24px;
+            background: var(--amber-500);
+            color: var(--slate-950);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .k-title { font-weight: 700; font-size: 15px; color: #fff; }
+        .vol { font-size: 12px; color: var(--slate-400); }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--slate-800);
+            color: var(--amber-500);
+            border: 1px solid var(--slate-700);
+        }
+
+        .k-desc { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+
+        /* Copy Block */
+        .copy-block {
+            background: #000;
+            border: 1px solid var(--slate-700);
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 13px;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            position: relative;
+        }
+        .copy-block::before {
+            content: "COPY DATA";
+            position: absolute;
+            top: 0; right: 0;
+            background: var(--slate-700);
+            color: #fff;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-bottom-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .warning {
+            font-size: 13px; color: var(--amber-500); background: var(--amber-900);
+            padding: 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--amber-500);
+        }
+
+        .footer {
+            margin-top: 50px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            font-size: 11px;
+            color: var(--slate-400);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 40px 20px; }
+            .art-canvas { padding: 50px; }
+            h1 { font-size: 2.2rem; }
+            .grid-2 { grid-template-columns: 1fr 1fr; }
+            .k-header { flex-direction: row; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="art-canvas">
+    <div class="hud-line top-l"></div>
+    <div class="hud-line top-v"></div>
+    <div class="hud-line bottom-r"></div>
+    <div class="hud-line bottom-v"></div>
+
+    <header class="header">
+        <div class="brand-tag">WKNDMOOD × MASHCORE </div>
+        <h1>네이버플레이스 키워드 운영 재정렬</br> + 여성추천형(남편 추천 중심) 강화안</h1>
+        <div class="meta">
+            수신: <b>박선우 대표</b><br>
+            작성: <b>규현 </b></br>
+            목적: <b>사업자 타겟 확장</b> + <b>기존 연애축 유지</b> + <b>모바일 유입/전환 최적화</b>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2>1) 이번 운영안의 핵심 결론 (한 줄 요약)</h2>
+        <div class="box highlight">
+            <p style="margin-top:0; font-weight:700; color:var(--amber-500); font-size: 15px;">대표키워드는 “검색량 확보용”으로 유지/재배치하고, </br>사업자·고의도 키워드는 상세정보/소식/블로그 본문에서 전환 장치로 누적합니다.</p>
+            <h3>방향성 포인트</h3>
+            <ul>
+                <li><b>연애 관련 컨텐츠는 유지</b> (유입/인지 축 유지)</li>
+                <li><b>사업자용 사진/이미지/홈스타일링</b>으로 확장 (매출/단가/장기관리 축 강화)</li>
+                <li><b>여성추천형은 ‘남편 추천’ 중심</b>으로 강화 (현실 결제/권유 동선에 맞춤)</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>2) 여성추천형 강화 방향 (남편 추천 중심)</h2>
+        <p class="sub-text">※ 남친 추천형은 질투/관계역학상 저항이 생기기 쉬움. 반면 남편 추천형은 “가정/사회적 이미지 개선” 프레임으로 설득력이 높음.</p>
+        
+        <div class="grid-2">
+            <div class="box">
+                <h3>왜 남편 추천형이 유리한가</h3>
+                <ul>
+                    <li>가정 단위 소비에서 <b>실용적 명분</b>이 분명함</li>
+                    <li>“더 깔끔해 보였으면/신뢰 있어 보였으면” 니즈가 큼</li>
+                    <li>사업자/직장인 모두에게 <b>대외 인상 개선</b> 명분이 있음</li>
+                    <li>사진 1회보다 <b>스타일·무드·생활 정돈</b>까지 연결되면</br> 재구매/확장 여지 큼</li>
+                </ul>
+            </div>
+            <div class="box">
+                <h3>여성추천형 메시지 프레임 (권장)</h3>
+                <ul>
+                    <li><b>“잘생김”</b>보다 <b>“신뢰감/단정함/안정감”</b> 강조</li>
+                    <li>“남편이 더 괜찮아 보이게” → <b>가정/일 모두 이득</b> 프레임</li>
+                    <li>“사진 찍기”가 아니라 <b>인상/생활무드 정돈</b>으로 설명</li>
+                    <li>선물/추천/기념일 패키지 문맥 활용 가능</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>여성추천형 문장 톤 예시 (소식/블로그/상세정보 문맥용)</h3>
+            <ul>
+                <li>“남편이 더 깔끔하고 신뢰감 있게 보였으면 좋겠다는 마음에서 시작되는 변화”</li>
+                <li>“잘 나온 사진보다, 실제 만남에서 반응이 달라지는 인상 정돈”</li>
+                <li>“일/소개/가족모임에서도 자연스럽게 좋아 보이는 남성 이미지 설계”</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>3) 네이버플레이스 대표키워드 최종 운영안 (현재 기준)</h2>
+        <p class="sub-text">원칙: <b>검색량 기반 유입 유지 + 신규 확장축 진입</b>. 저검색량 고의도 키워드는 상세정보/소식/블로그에서 운영.</p>
+        
+        <div class="warning">
+            ⚠️ 대표키워드는 “브랜드가 멋져 보이는 단어”보다 “실제 검색되는 단어” 우선으로 운영합니다. (사업자 방향성 키워드는 상세정보 문맥에서 누적)
+        </div>
+
+        <div class="k-card">
+            <div class="k-header">
+                <div class="k-title-wrap">
+                    <div class="rank">1</div>
+                    <div class="k-title">프사</div>
+                </div>
+                <div class="vol">월간 조회수: 9,140</div>
+            </div>
+            <div class="tags">
+                <span class="tag">대량유입</span> <span class="tag">모바일강세</span> <span class="tag">입구키워드</span>
+            </div>
+            <div class="k-desc">가장 큰 유입 창구. 의도는 넓지만 모바일 유입이 압도적으로 많아 플레이스 노출/인지 확보에 유리.</br> 이후 상세정보/소식에서 “단순 프사 → 인상 설계/비즈니스/홈스타일링 확장”으로 안내.</div>
+        </div>
+
+        <div class="k-card">
+            <div class="k-header">
+                <div class="k-title-wrap">
+                    <div class="rank">2</div>
+                    <div class="k-title">홈스타일링</div>
+                </div>
+                <div class="vol">월간 조회수: 1,400</div>
+            </div>
+            <div class="tags">
+                <span class="tag">신규확장축</span> <span class="tag">고볼륨</span> <span class="tag">사업자/가정 연결</span>
+            </div>
+            <div class="k-desc">홈스타일링컨설팅(70)보다 검색량이 월등히 높아 대표키워드로 적합.</br> 블로그/소식/상세정보에서 “홈스타일링컨설팅”으로 자연스럽게 전환시키는 구조 권장.</div>
+        </div>
+
+        <div class="k-card">
+            <div class="k-header">
+                <div class="k-title-wrap">
+                    <div class="rank">3</div>
+                    <div class="k-title">컨셉사진</div>
+                </div>
+                <div class="vol">월간 조회수: 810</div>
+            </div>
+            <div class="tags">
+                <span class="tag">기존강점</span> <span class="tag">브릿지키워드</span>
+            </div>
+            <div class="k-desc">위캔드무드의 기존 정체성을 유지하는 핵심 키워드. 연애/브랜딩/사업자 사진 모두 연결 가능한 범용 브릿지 키워드로 가치가 높음.</div>
+        </div>
+
+        <div class="k-card">
+            <div class="k-header">
+                <div class="k-title-wrap">
+                    <div class="rank">4</div>
+                    <div class="k-title">소개팅사진</div>
+                </div>
+                <div class="vol">월간 조회수: 360</div>
+            </div>
+            <div class="tags">
+                <span class="tag">고의도</span> <span class="tag">기존전환축</span>
+            </div>
+            <div class="k-desc">기존 WKND의 성과/리뷰/콘텐츠 자산과 결합력이 높음. 즉시 매출화 가능한 키워드이므로 유지 가치 큼. (연애축 유입 보존)</div>
+        </div>
+
+        <div class="k-card">
+            <div class="k-header">
+                <div class="k-title-wrap">
+                    <div class="rank">5</div>
+                    <div class="k-title">남자스타일링</div>
+                </div>
+                <div class="vol">월간 조회수: 350</div>
+            </div>
+            <div class="tags">
+                <span class="tag">정체성핵심</span> <span class="tag">서비스설명력</span>
+            </div>
+            <div class="k-desc">WKND의 서비스 본질(스타일링/디렉팅)을 설명하는 키워드. 단순 촬영이 아닌 인상 설계 팀이라는 포지셔닝 연결에 중요.</div>
+        </div>
+
+        <div class="box">
+            <h3>대표키워드에서 제외하지만 반드시 운영할 키워드 (상세/소식/블로그용)</h3>
+            <div class="tags" style="margin-top: 10px;">
+                <span class="tag">네이버플레이스사진</span>
+                <span class="tag">비즈니스프로필촬영</span>
+                <span class="tag">대표프로필사진</span>
+                <span class="tag">비즈니스이미지컨설팅</span>
+                <span class="tag">홈스타일링컨설팅</span>
+                <span class="tag">남성퍼스널브랜딩</span>
+            </div>
+            <p class="k-desc" style="margin-top: 10px;">위 키워드들은 검색량보다 의도/방향성이 강함. 대표키워드 자리는 유입용으로 쓰고, </br>이 키워드들은 상세설명/소식/블로그에서 전환 장치로 누적하는 방식 권장.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>4) 상세정보란 텍스트 (SEO + 실제 소개형식 / 초안)</h2>
+        <p class="sub-text">※ 대표키워드(유입용) + 사업자/고의도 키워드(포지셔닝용)를 자연스럽게 혼합한 문안</p>
+        <div class="copy-block">위캔드무드는 프사 · 컨셉사진 · 소개팅사진 · 남자스타일링을 기반으로, 단순 촬영을 넘어 인상(Perception)과 라이프스타일을 설계하는 이미지 시스템으로 운영되고 있습니다.
+
+잘 나온 사진 몇 장보다 중요한 건, 처음 만나는 자리에서 신뢰가 먼저 생기는 인상입니다.
+
+그래서 위캔드무드는 촬영만 진행하지 않고, 고객의 목적(소개팅·프로필·미팅·브랜딩)에 맞춰 스타일링, 현장 무드, 태도 디렉팅, 결과물 활용 방향까지 함께 설계합니다. (연애/개인용 프사부터 대표/사업자의 비즈니스 이미지까지 확장 운영)
+
+특히 최근에는 사업자·대표 고객을 위한 방향성으로 네이버플레이스사진, 대표프로필사진, 비즈니스프로필촬영, 비즈니스이미지컨설팅 영역을 강화하고 있습니다.
+
+단순히 사진을 등록하는 것이 아니라, 플레이스/소개/상담/미팅에서 “이 업체는 정돈되어 있다”는 인식이 먼저 생기도록 사람의 인상과 공간의 무드를 함께 설계하는 것이 핵심입니다.
+
+또한 WKND × Mashcore 방향성으로, 외모 변화에 그치지 않고 루틴/태도/생활감/공간까지 연결되는 구조를 지향하며, 필요 시 홈스타일링 · 홈스타일링컨설팅까지 연계해 일상에서 유지되는 이미지를 만듭니다.
+
+추천 대상
+- 대표/사업자/전문직 (신뢰·소개·대외 인상이 중요한 분)
+- 프사/소개팅사진이 필요하지만 단순 촬영 이상의 변화를 원하는 분
+- 남자스타일링과 인상 정돈을 함께 받고 싶은 분
+- 네이버플레이스에서 보이는 이미지 퀄리티를 높이고 싶은 사업자
+
+위캔드무드는 앞으로 남성 토탈 솔루션(이미지·스타일링·라이프스타일·비즈니스 인상 설계) 방향으로 확장합니다.
+문의는 개인톡/공식 채널로 주세요.</div>
+    </section>
+
+    <section class="section">
+        <h2>5) 여성추천형(남편 추천) 전환 문장 템플릿</h2>
+        <p class="sub-text">※ “남친 꾸미기” 느낌보다, “남편의 신뢰감/단정함/생활무드 개선” 프레임으로 운영</p>
+        <div class="grid-2">
+            <div class="box">
+                <h3 style="color: var(--amber-500); font-size: 13px;">템플릿 A (부드러운 추천형)</h3>
+                <p style="margin:0; font-size: 14px; color: #cbd5e1;">“남편이 더 깔끔하고 신뢰감 있게 보였으면 좋겠다는 마음에서 시작되는 변화가 있습니다. 위캔드무드는 사진만 찍는 것이 아니라, 인상과 생활 무드까지 함께 정돈하는 방향으로 도와드립니다.”</p>
+            </div>
+            <div class="box">
+                <h3 style="color: var(--amber-500); font-size: 13px;">템플릿 B (사업자/대표형)</h3>
+                <p style="margin:0; font-size: 14px; color: #cbd5e1;">“대표의 인상은 곧 브랜드의 첫인상입니다. 위캔드무드는 스타일링·촬영·공간 무드·홈스타일링까지 연결해, 실제 미팅과 소개에서 신뢰가 먼저 생기는 이미지를 설계합니다.”</p>
+            </div>
+            <div class="box">
+                <h3 style="color: var(--amber-500); font-size: 13px;">템플릿 C (기념일/권유형)</h3>
+                <p style="margin:0; font-size: 14px; color: #cbd5e1;">“선물처럼 시작하지만 결과는 더 오래 갑니다. 남편의 사진 한 장이 아니라, 더 단정하고 여유 있어 보이는 일상 버전의 인상을 만드는 프로젝트로 추천드립니다.”</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>6) 운영 가이드 (박선우 대표 실행용 체크포인트)</h2>
+        <div class="box highlight">
+            <ol>
+                <li><b>대표키워드 교체/정렬</b> → 홈스타일링 반영</li>
+                <li><b>상세정보란 문안 업데이트</b> → 사업자/플레이스/홈스타일링 확장 문맥 반영</li>
+                <li><b>소식 운영 분리</b> → (연애/프사 유입형) + (사업자/홈스타일링 전환형) 병행</li>
+                <li><b>여성추천형 문맥 추가</b> → 남편 추천/신뢰감 프레임으로 문장 통일</li>
+                <li><b>블로그 본문에서 전환키워드 누적</b> → 홈스타일링컨설팅 / 네이버플레이스사진 / 비즈니스프로필촬영</li>
+            </ol>
+        </div>
+        <div class="sub-text" style="text-align: center; color: var(--amber-500); margin-top: 20px;">
+            [ 다음 논의 권장 순서: ① 네이버플레이스 소식 8개 기획 ② 메인사진 콘셉트(사업자형/여성추천형) ③ 리뷰 유도 문장 템플릿 ]
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div>DESIGNED BY CORESMITH SYSTEM 2026</div>
+        <div style="margin-top: 4px;">STRICTLY FOR SUNWOO PARK / WKNDMOOD</div>
+    </footer>
+</div>
+
+</body>
+</html>
