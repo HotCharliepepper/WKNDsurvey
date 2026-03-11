@@ -267,38 +267,7 @@
     .s-menu-title { font-size: 0.95rem; color: #fff; font-weight: 500; }
     
     .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-top: 4px; }
-
-    .btn-gold{
-      appearance:none; border:1px solid rgba(251,191,36,0.38); background: rgba(251,191,36,0.12);
-      color: var(--gold); font-weight: 900; padding: 12px 14px; border-radius: 12px;
-      cursor:pointer; transition: all .15s ease; font-family: var(--font-mono);
-      letter-spacing: .08em; text-transform: uppercase;
-    }
-    .btn-gold:hover{ background: var(--gold); color:#111827; }
-    .cta-compact{
-      margin-top: 14px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(180deg, rgba(8,12,24,0.72), rgba(8,12,24,0.52));
-      padding: 14px;
-    }
-    .cta-mini{
-      color: rgba(255,255,255,0.74); font-size: .9rem;
-      line-height: 1.5; margin-bottom: 12px; word-break: keep-all;
-    }
-    .cta-mini b{ color: var(--gold); }
-    .cta-button-stack{ display:grid; grid-template-columns: 1fr; gap: 10px; }
-    .cta-button-stack button{
-      width:100%; min-height: 52px; display:flex;
-      align-items:center; justify-content:center; text-align:center; white-space:normal;
-    }
-    .cta-helper{
-      margin-top: 10px; color: rgba(255,255,255,0.58);
-      font-size: .8rem; line-height: 1.5; text-align:center;
-    }
-    @media (min-width: 720px){
-      .cta-button-stack{ grid-template-columns: repeat(3, 1fr); }
-    }
-
+    
     .footer{ position:relative; z-index:2; display:flex; justify-content:space-between; gap: 10px; padding: 12px 16px; background: rgba(2,6,23,0.35); border-top: 1px solid var(--glass-border); font-size: .82rem; color: var(--text-muted); backdrop-filter: blur(10px); }
     .footer b{ color: var(--gold); }
     .kbd{ background: rgba(255,255,255,0.10); padding: 2px 6px; border-radius: 6px; font-family: var(--font-mono); color: #fff; border: 1px solid rgba(255,255,255,0.10); }
@@ -345,7 +314,7 @@
     </main>
 
     <footer class="footer">
-      <div><b>NOT MANIPULATION.</b> 과장이 아닌 정렬, 연출이 아닌 자연스러운 일치</div>
+      <div><b>NOT MANIPULATION.</b> 과장이 아닌 정렬, 연출이 아닌 일치감</div>
       <div><span class="kbd">Enter</span> Continue · <span class="kbd">Esc</span> Reset · <span class="kbd">P</span> Sound</div>
     </footer>
   </div>
@@ -361,13 +330,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const startBtn = document.getElementById('startBtn');
 
   // ====== CONFIG ======
-  const ACCEPT_KEYS = [];
-  const REQUIRE_KEY = false;
-  const CTA_LINKS = {
-    entry: "",
-    signature: "",
-    black: ""
-  };
+  const ACCEPT_KEYS = []; 
+  const REQUIRE_KEY = true; 
   // ====================
 
   function addMsg(who, text, hint){
@@ -429,10 +393,8 @@ document.addEventListener('DOMContentLoaded', function () {
     mode: null,
     total: 0,
     idx: -1,
-    eidx: -1,
     finished: false,
-    answers: {},
-    ethicsAns: {}
+    answers: {}
   };
 
   function setProgress(n){
@@ -642,8 +604,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const TOUCH = {
     5:  { stage: 'FIRST READ', text: "첫인상은 크게 만드는 게 아니라, 군더더기를 덜어낼 때 또렷해집니다.\n지금은 ‘꾸미기’보다 ‘정렬’에 집중하는 구간입니다." },
-    10: { stage: 'ATTRACTION', text: "연애의 무드는 정보보다 리듬에서 시작됩니다.\n말의 속도, 향의 잔향, 조명의 온도 같은 작은 요소들이 은근한 힘을 가지고 있어요." },
-    15: { stage: 'ALIGNMENT', text: "거의 다 왔어요.\n좋은 인상은 억지로 강해지는 것이 아니라, 나와 공간과 태도가 같은 방향을 바라볼 때 자연스럽게 만들어집니다." },
+    10: { stage: 'ATTRACTION', text: "연애의 무드는 정보보다 리듬에서 나옵니다.\n말의 속도, 향의 잔향, 조명의 온도 같은 작은 것들이 은근히 셉니다." },
+    15: { stage: 'ALIGNMENT', text: "거의 다 왔습니다.\n좋은 인상은 억지로 강해지는 게 아니라, 나와 공간과 태도가 같은 방향을 볼 때 생깁니다." },
   };
 
   function doTouchIfNeeded(no){
@@ -656,16 +618,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const MODES = [
-    { key:'LITE', name:'LITE (1분)', desc:'오늘의 첫인상 타입과 </br>바로 적용할 수 있는 3가지를 알려드립니다.', take: 11 },
-    { key:'STANDARD', name:'STANDARD (2분)', desc:'인상 + 연애 무드 + 홈스타일링 </br>연결 포인트까지 살펴봅니다.', take: 14 },
-    { key:'DEEP', name:'DEEP (3분)', desc:'소개팅·자택 초대를 위한 풀 리포트의 사전 단계입니다.', take: 16 },
+    { key:'LITE', name:'LITE (1분)', desc:'오늘의 첫인상 타입과 </br>바로 적용할 3가지를 뽑습니다.', take: 11 },
+    { key:'STANDARD', name:'STANDARD (2분)', desc:'인상 + 연애 무드 + 홈스타일링 </br>연결 포인트까지 읽습니다.', take: 14 },
+    { key:'DEEP', name:'DEEP (3분)', desc:'소개팅·자택 초대용 풀리포트 전 단계입니다.', take: 16 },
   ];
 
   const Q_BANK = [
     {
       part:'C', id:'C1',
       text:"지금 당신이 가장 바꾸고 싶은 첫인상은?",
-      sub:"다른 사람이 오해하기 쉬운 부분을 하나만 골라 주세요.",
+      sub:"남이 오해하는 포인트를 하나만 고른다면요.",
       kind:'single',
       options:[
         {k:'A', t:'너무 차갑고 거리감 있어 보임', score:{poise:1, sharp:1, friction:1}},
@@ -687,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     {
       part:'C', id:'C3',
-      text:"첫 10분 안에 내가 주로 활용하는 매력은?",
+      text:"첫 10분 안에 내가 주로 쓰는 무기는?",
       kind:'single',
       options:[
         {k:'A', t:'표정과 눈빛', score:{allure:1, magnet:1, v:2}},
@@ -698,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     {
       part:'C', id:'C4',
-      text:"오히려 내 인상이 흐려지는 순간은?",
+      text:"오히려 내 인상을 망치는 순간은?",
       kind:'single',
       options:[
         {k:'A', t:'말이 빨라지고 설명이 길어질 때', score:{friction:1, a:1, poise:1}},
@@ -721,7 +683,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       part:'U', id:'U1',
       text:"당신의 인상을 가장 빨리 바꾸는 감각은?",
-      sub:"오감은 따로 움직이는 것 같지만 실제로는 하나로 연결되어 있어요. 그래도 가장 빠른 스위치는 있습니다.",
+      sub:"오감은 따로 노는 척하지만 실제론 한 팀입니다. 그래도 가장 빠른 스위치는 있습니다.",
       kind:'single',
       options:[
         {k:'A', t:'시각(컬러·실루엣·정리감)', score:{v:3, sharp:1}},
@@ -733,7 +695,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       part:'U', id:'U2',
       text:"아래 팔레트 중 ‘나답다’에 가장 가까운 건?",
-      sub:"예쁜 색보다, 몸이 편안해지는 조합을 골라 주세요.",
+      sub:"예쁜 색보다, 몸이 덜 긴장하는 조합으로 고르세요.",
       kind:'palette',
       palettes:[
         {k:'A', name:'POISE', colors:['#0F172A','#334155','#CBD5E1','#F8FAFC'], score:{poise:2, trust:1, v:1}},
@@ -778,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       part:'T', id:'T1',
       text:"[퀘스트] ‘신뢰감’을 디자인 언어로 번역하면?",
-      sub:"정답은 없어요. 마음이 끌리는 쪽으로 골라 주세요.",
+      sub:"정답 없음. 몸이 수긍하는 쪽으로.",
       kind:'single',
       options:[
         {k:'A', t:'정돈된 실루엣 + 깨끗한 신발 + 짧은 문장', score:{trust:3, sharp:1}},
@@ -853,41 +815,6 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   ];
 
-  const ETHICS = [
-    {
-      id:'E1',
-      kind:'single',
-      text:"이 설문의 목표는?",
-      options:[
-        {k:'A', t:'상대를 속여서라도 강한 인상을 남긴다'},
-        {k:'B', t:'나와 맞는 사람에게 편안하고 또렷한 인상을 준다'},
-        {k:'C', t:'과장된 연출로 분위기만 만든다'},
-        {k:'D', t:'모르겠다'},
-      ]
-    },
-    {
-      id:'E2',
-      kind:'single',
-      text:"상대가 부담/불편 신호를 보이면?",
-      options:[
-        {k:'A', t:'분위기를 위해 그냥 밀고 간다'},
-        {k:'B', t:'속도를 낮추고 거리와 리듬을 조절한다'},
-        {k:'C', t:'모른 척 넘어간다'},
-        {k:'D', t:'내가 상처받았다고 느낀다'},
-      ]
-    },
-    {
-      id:'E3',
-      kind:'check',
-      text:"아래 3가지를 모두 체크하시면 다음 단계로 넘어갑니다.",
-      checks:[
-        "과장이 아니라 자연스러운 일치를 목표로 합니다",
-        "상대의 속도와 경계를 존중합니다",
-        "비용보다 정리와 분위기 조절을 우선합니다"
-      ]
-    },
-  ];
-
   let Q = [];
 
   function buildQuestionList(){
@@ -906,10 +833,8 @@ document.addEventListener('DOMContentLoaded', function () {
     runtime.mode = null;
     runtime.total = 0;
     runtime.idx = -1;
-    runtime.eidx = -1;
     runtime.finished = false;
     runtime.answers = {};
-    runtime.ethicsAns = {};
     clearPanel();
     chat.innerHTML = '';
     setProgress(0);
@@ -923,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function () {
     addMsg(
       'bot',
       "WKND FIRST IMPRESSION · ATTRACTION SCAN\n\n당신의 첫인상이 어디에서 만들어지고\n어디에서 무너지는지 보는 짧은 스캔입니다.\n\n단 1분을 투자하여 첫인상을 개선해보세요.",
-      "성함과 전화번호를 우측에 입력해 주세요."
+      "성함과 전화번호를 우측에 입력해주세요."
     );
     showGate();
   }
@@ -937,8 +862,8 @@ document.addEventListener('DOMContentLoaded', function () {
     card.className = 'q-card';
     card.innerHTML = `
       <div class="q-meta"><span>ENTRY</span><span>SESSION</span></div>
-      <div class="q-text">첫인상 스캔 시작하기</div>
-      <div class="q-sub">성함과 전화번호를 입력하시면 첫인상 설계 스캔이</br> 시작됩니다. (솔루션은 위캔드무드가 제공합니다.)</div>
+      <div class="q-text">첫인상 스캔에 진입하기</div>
+      <div class="q-sub">성함과 전화번호를 입력하면, 연애·첫인상 설계 스캔이</br> 시작됩니다. (솔루션은 위캔드무드가 제공합니다.)</div>
     `;
 
     const f1 = document.createElement('div');
@@ -976,7 +901,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const pass = REQUIRE_KEY ? (passByPresence || passByList) : true;
 
       if(!pass){
-        addMsg('bot', "입장 키를 확인해 주세요.", "키가 없으시다면 DEMO 버튼으로 먼저 체험해 보실 수 있습니다.");
+        addMsg('bot', "입장 키가 유효하지 않습니다.", "키가 없다면 DEMO 버튼으로 구조만 먼저 확인할 수 있습니다.");
         return;
       }
 
@@ -986,8 +911,8 @@ document.addEventListener('DOMContentLoaded', function () {
       addUser(`입장 키: ${runtime.sessionKey}${runtime.clientName ? " · " + runtime.clientName : ""}`);
       addMsg(
         'bot',
-        "좋습니다. 진입 완료.\n간단한 룰이 있어요. ① 5초 안에 편하게 선택 ② 고민되면 몸이 편한 쪽으로 ③ 과장보다 자연스러운 정렬.",
-        "이 스캔은 ‘설득’이 아니라, 선택을 가볍게 도와드리는 도구입니다."
+        "좋습니다. 진입 완료.\n룰: ① 5초 안에 선택 ② 고민되면 몸이 편한 쪽 ③ 과장보다 정렬.",
+        "이 스캔은 ‘설득’이 아니라, 선택을 가볍게 만드는 도구입니다."
       );
       showModeSelector();
     });
@@ -996,7 +921,7 @@ document.addEventListener('DOMContentLoaded', function () {
       runtime.sessionKey = "DEMO";
       runtime.clientName = (name.value || '').trim();
       addUser(`DEMO 진입${runtime.clientName ? " · " + runtime.clientName : ""}`);
-      addMsg('bot', "데모 모드로 시작합니다.", "질문 흐름과 결과 카드를 먼저 체험해 보실 수 있습니다.");
+      addMsg('bot', "데모 모드로 진입합니다.", "질문 흐름과 결과 카드 구조를 먼저 점검하는 용도로 좋습니다.");
       showModeSelector();
     });
 
@@ -1039,7 +964,7 @@ document.addEventListener('DOMContentLoaded', function () {
     card.innerHTML = `
       <div class="q-meta"><span>SETUP</span><span>${runtime.sessionKey || "SESSION"}</span></div>
       <div class="q-text">MODE SELECT</div>
-      <div class="q-sub">최소 1분 투자로 첫인상을 개선할 수 있습니다.</br> 고급 모드를 선택하시면 더 세밀한 피드백을 받으실 수 있습니다.</div>
+      <div class="q-sub">최소 1분 투자로 첫인상 개선이 가능합니다.</br> 고급모드 경험시 디테일한 피드백이 가능합니다.</div>
     `;
 
     const opts = document.createElement('div');
@@ -1098,11 +1023,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     runtime.idx += 1;
 
+    // [MODIFIED] 질문이 끝나면 윤리게이트 없이 바로 결과 화면으로 직행
     if(runtime.idx >= Q.length){
-      setStage('ETHICS GATE');
-      addMsg('bot', "스캔이 완료되었습니다. 마지막 확인 단계를 거치면 결과가 생성됩니다.", "올바른 방향으로 활용하기 위한 간단한 점검입니다.");
-      runtime.eidx = 0;
-      showEthics();
+      addMsg('bot', "스캔 완료. 결과를 정리하는 중입니다...");
+      renderResult();
       return;
     }
 
@@ -1338,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const tip = document.createElement('div');
       tip.className = 'q-sub';
       tip.style.marginTop = '10px';
-      tip.textContent = "짧지만 장면이 떠오르도록 써 주세요.";
+      tip.textContent = "짧게, 하지만 장면이 그려지게.";
 
       const bar = document.createElement('div');
       bar.className = 'action-bar';
@@ -1350,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const v = (inp.value || '').trim();
 
         if(v.length < 8){
-          addMsg('bot', "조금만 더 구체적으로 적어 주세요. 최소 8자가 필요합니다.", "예: 조용한 호텔 같지만, 가까워질수록 따뜻한 사람");
+          addMsg('bot', "조금만 더 구체하게. 최소 8자.", "예: 조용한 호텔 같지만, 가까워질수록 따뜻한 사람");
           return;
         }
 
@@ -1404,30 +1328,6 @@ document.addEventListener('DOMContentLoaded', function () {
     stopAudio();
     setStage('RESULT');
 
-    const ok1 = runtime.ethicsAns.E1 === 'B';
-    const ok2 = runtime.ethicsAns.E2 === 'B';
-    const ok3 = Array.isArray(runtime.ethicsAns.E3) && runtime.ethicsAns.E3.every(Boolean);
-
-    if(!(ok1 && ok2 && ok3)){
-      clearPanel();
-      addMsg('bot', "확인 단계를 통과하지 못했습니다.", "이 도구는 진정성 있는 방향으로만 활용할 수 있도록 설계되어 있습니다.");
-
-      const card = document.createElement('div');
-      card.className = 'q-card';
-      card.innerHTML = `
-        <div class="q-text">GATE FAILED</div>
-        <div class="q-sub">다시 시도해 보시거나, 상대의 속도와 경계를 먼저 존중하는 마음으로 임해 주세요.</div>
-      `;
-
-      const bar = document.createElement('div');
-      bar.className = 'action-bar';
-      bar.appendChild(mkBtn('RESTART', 'btn-main', () => start()));
-      card.appendChild(bar);
-
-      panel.appendChild(card);
-      return;
-    }
-
     const arch = topTwo(['poise','warmth','trust','allure','sharp','magnet']);
     const top = arch[0];
     const second = arch[1];
@@ -1435,43 +1335,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const sTop = senses[0];
 
     const ARCH_LABEL = {
-      poise:  {name:"POISE(안정감)", weapon:"조용한 안정감이 강점입니다. 과하게 설명하지 않아도 괜찮은 사람 같다는 인상을 줍니다.", shadow:"안정감이 심심하게 느껴지지 않도록 한 군데에 선명한 포인트를 더해 보세요."},
-      warmth: {name:"WARMTH(온기)", weapon:"긴장을 빨리 낮추는 타입입니다. 상대가 스스로 말을 꺼내게 만드는 편안함이 있습니다.", shadow:"너무 빨리 친근해지면 가벼워 보일 수 있어요. 따뜻함 옆에 나만의 기준을 세워 두시면 좋습니다."},
-      trust:  {name:"TRUST(신뢰감)", weapon:"정리감과 청결감이 쌓여 믿을 만하다는 인상을 만듭니다.", shadow:"지나치게 안전하면 기억에 남기 어려울 수 있어요. 은은한 잔향 하나를 더해 보세요."},
-      allure: {name:"ALLURE(무드)", weapon:"빛, 거리감, 타이밍. 직접 세게 밀지 않아도 무드를 남길 수 있습니다.", shadow:"무드만 있고 구조가 없으면 모호하게 느껴질 수 있어요. 정리된 한 문장을 준비해 보세요."},
-      sharp:  {name:"SHARP(선명함)", weapon:"실루엣과 디테일의 정리가 좋을수록 존재감이 바로 살아납니다.", shadow:"선명함이 차갑게 느껴지지 않도록 미소와 속도를 함께 조율해 보세요."},
-      magnet: {name:"MAGNET(잔향)", weapon:"바로 강하게 치기보다, 지나간 뒤 생각나게 만드는 힘이 있습니다.", shadow:"읽히지 않는 신비로움은 거리감으로 느껴질 수 있어요. 상대가 안심할 수 있는 작은 단서를 남겨 두세요."},
+      poise:  {name:"POISE(안정감)", weapon:"조용한 안정감이 강점입니다. 과하게 설명하지 않아도 괜찮은 사람 같다는 인상을 줍니다.", shadow:"안정감이 심심함으로 읽히지 않게 한 군데 선명한 포인트가 필요합니다."},
+      warmth: {name:"WARMTH(온기)", weapon:"긴장을 빨리 낮추는 타입입니다. 상대가 스스로 말을 꺼내게 만드는 편안함이 있습니다.", shadow:"너무 빨리 친근해지면 가벼워 보일 수 있습니다. 따뜻함 옆에 기준을 세워두세요."},
+      trust:  {name:"TRUST(신뢰감)", weapon:"정리감과 청결감이 쌓여 믿을 만하다는 인상을 만듭니다.", shadow:"지나치게 안전하면 기억이 흐려질 수 있습니다. 잔향 한 방울이 필요합니다."},
+      allure: {name:"ALLURE(무드)", weapon:"빛, 거리감, 타이밍. 직접 세게 밀지 않아도 무드를 남길 수 있습니다.", shadow:"무드만 있고 구조가 없으면 모호하게 보일 수 있습니다. 정리된 한 문장이 필요합니다."},
+      sharp:  {name:"SHARP(선명함)", weapon:"실루엣과 디테일의 정리가 좋을수록 존재감이 바로 살아납니다.", shadow:"선명함이 차가움으로 번지지 않게 미소와 속도를 함께 설계해야 합니다."},
+      magnet: {name:"MAGNET(잔향)", weapon:"바로 강하게 치기보다, 지나간 뒤 생각나게 만드는 힘이 있습니다.", shadow:"읽히지 않는 신비로움은 거리감이 될 수 있습니다. 안심할 손잡이를 하나 남겨두세요."},
     };
 
     const SENSE_LABEL = {
-      v: {
-        name:"시각(실루엣/컬러)",
-        tip:"첫인상은 가장 먼저 보이는 장면에서 시작됩니다. 실루엣, 컬러, 현관 1초 컷만 정리해도 인상이 크게 달라집니다.",
-        day1:"옷·실루엣·조명 중 하나만 정리합니다. 많이 바꾸기보다, 나를 가장 또렷하게 보이게 하는 장면 1개면 충분합니다.",
-        day7:"소개팅·미팅·재회 전, '나가기 30분 전 1개 정리'를 루틴으로 만듭니다. 특히 상의 실루엣과 조명은 반복 점검할수록 안정됩니다.",
-        wknd:"더 빠르게 정리하고 싶다면, 나에게 맞는 무드와 시각적 방향부터 점검하는 편이 훨씬 정확합니다."
-      },
-      a: {
-        name:"청각(목소리/속도)",
-        tip:"목소리를 키우기보다 속도와 문장 길이를 정리해 보세요. 첫인상은 생각보다 말의 톤과 호흡에서 먼저 결정됩니다.",
-        day1:"목소리·속도·문장 길이 중 하나만 정리합니다. 짧고 차분하게 끊어 말하는 것만으로도 신뢰감이 올라갑니다.",
-        day7:"소개팅·미팅·재회 전, '나가기 30분 전 1개 정리' 루틴으로 말 속도와 첫 문장을 점검합니다. 청각 리듬이 잡히면 인상은 훨씬 덜 흔들립니다.",
-        wknd:"더 빠르게 정리하고 싶다면, 나에게 맞는 말투와 분위기 방향부터 점검하는 편이 훨씬 정확합니다."
-      },
-      t: {
-        name:"촉감(원단/거리감)",
-        tip:"원단, 자세, 거리감은 생각보다 빨리 읽힙니다. 몸이 편한 옷과 긴장을 덜어내는 자세가 첫인상을 안정시킵니다.",
-        day1:"원단·자세·거리감 중 하나만 정리합니다. 특히 어깨 힘과 손 위치를 정리하면 인상이 훨씬 부드럽고 단정해집니다.",
-        day7:"소개팅·미팅·재회 전, '나가기 30분 전 1개 정리' 루틴으로 옷의 촉감과 몸의 긴장도를 점검합니다. 몸이 편해야 인상도 편안하게 읽힙니다.",
-        wknd:"더 빠르게 정리하고 싶다면, 나에게 맞는 원단감과 장면 분위기부터 점검하는 편이 훨씬 정확합니다."
-      },
-      s: {
-        name:"향(잔향/공기감)",
-        tip:"강한 향보다 깨끗한 공기와 약한 잔향이 오래 갑니다. 환기 후 얇게 남기는 쪽이 훨씬 세련됩니다.",
-        day1:"향·공기감·현관 첫 공기 중 하나만 정리합니다. 좋은 첫인상은 강한 존재감보다 정리된 잔향에서 시작됩니다.",
-        day7:"소개팅·미팅·재회 전, '나가기 30분 전 1개 정리' 루틴으로 공기감과 잔향을 점검합니다. 향은 강도보다 청결감과 잔향이 중요합니다.",
-        wknd:"더 빠르게 정리하고 싶다면, 나에게 맞는 무드와 공기감 방향부터 점검하는 편이 훨씬 정확합니다."
-      }
+      v: {name:"시각(실루엣/컬러)", tip:"실루엣 하나, 조명 하나, 현관 1초 컷 하나만 정리해도 인상이 크게 달라집니다."},
+      a: {name:"청각(목소리/속도)", tip:"목소리를 키우기보다 문장 길이와 속도를 정리하세요. 천천히 끊어 말하는 것만으로 신뢰감이 올라갑니다."},
+      t: {name:"촉감(원단/거리감)", tip:"원단과 자세가 의외로 큽니다. 몸이 편한 옷, 긴장을 덜어내는 어깨·손 위치부터 정리하세요."},
+      s: {name:"향(잔향/공기감)", tip:"강한 향보다 깨끗한 공기 + 약한 잔향이 오래 갑니다. 환기 후 얇게 남기는 쪽이 좋습니다."},
     };
 
     const aInfo = ARCH_LABEL[top.k];
@@ -1481,7 +1357,7 @@ document.addEventListener('DOMContentLoaded', function () {
     addMsg(
       'bot',
       `결과 생성 완료.\nPRIMARY: "${aInfo.name}"\nSECOND: "${a2Info.name}"\nFAST TRIGGER: "${sInfo.name}"`,
-      "이것은 가면을 씌우는 것이 아니라, 원래 가지고 계신 인상을 더 또렷하게 드러내는 안내입니다."
+      "이건 가면을 씌우는 테스트가 아니라, 원래 있던 인상을 더 또렷하게 꺼내는 우선순위입니다."
     );
 
     clearPanel();
@@ -1551,9 +1427,9 @@ document.addEventListener('DOMContentLoaded', function () {
     prot.innerHTML = `
       <h3>실전 프로토콜 (0→7일)</h3>
       <p>
-        <b style="color:var(--primary)">0~30분</b> : ${sInfo.tip}<br>
-        <b style="color:var(--gold)">24시간</b> : ${sInfo.day1}<br>
-        <b style="color:var(--accent)">7일</b> : ${sInfo.day7} ${sInfo.wknd}
+        <b style="color:var(--primary)">0~30분</b> : "${sInfo.name}"부터 한 번에 체감 만들기. ${sInfo.tip}<br>
+        <b style="color:var(--gold)">24시간</b> : 옷·조명·목소리 중 나를 가장 잘 살리는 장면 1개만 정리합니다.<br>
+        <b style="color:var(--accent)">7일</b> : 소개팅·미팅·만남 전 '나가기 30분 전 1개 정리'를 루틴으로 만듭니다. 더 빠르게 정리하고 싶다면, 나에게 맞는 무드와 방향부터 점검하는 편이 훨씬 정확합니다.
       </p>
     `;
     card.appendChild(prot);
@@ -1568,57 +1444,14 @@ document.addEventListener('DOMContentLoaded', function () {
       `WEAPON: ${aInfo.weapon}`,
       `SHADOW: ${aInfo.shadow}`,
       `0~30m: ${sInfo.tip}`,
-      `24h: ${sInfo.day1}`,
-      `7d: ${sInfo.day7}`,
     ].filter(Boolean).join('\n');
 
-    function copyText(text, okMsg, failMsg){
-      navigator.clipboard.writeText(text)
-        .then(() => addMsg('bot', okMsg, "카카오톡, 노션, 상담창에 바로 붙여넣으실 수 있도록 정리했습니다."))
-        .catch(() => addMsg('bot', failMsg || "복사에 실패했습니다.", "브라우저 권한 설정을 확인해 주세요."));
-    }
-
-    function handleContact(kind){
-      const templates = {
-        entry: [
-          `[WKND Spring Entry 문의]`,
-          runtime.clientName ? `이름: ${runtime.clientName}` : null,
-          `세션키: ${runtime.sessionKey}`,
-          `결과: ${aInfo.name} / ${a2Info.name}`,
-          `빠른 트리거: ${sInfo.name}`,
-          `희망 목적: 소개팅 / 데이트 / 프로필 중 상담`,
-        ].filter(Boolean).join('\n'),
-        signature: [
-          `[WKND Signature Edit 문의]`,
-          runtime.clientName ? `이름: ${runtime.clientName}` : null,
-          `세션키: ${runtime.sessionKey}`,
-          `결과: ${aInfo.name} / ${a2Info.name}`,
-          `현재 결과 기반으로 메인 패키지 안내 요청`,
-        ].filter(Boolean).join('\n'),
-        black: [
-          `[WKND Black Label 문의]`,
-          runtime.clientName ? `이름: ${runtime.clientName}` : null,
-          `세션키: ${runtime.sessionKey}`,
-          `결과: ${aInfo.name} / ${a2Info.name}`,
-          `확장 목적 상담 요청`,
-        ].filter(Boolean).join('\n')
-      };
-
-      const link = CTA_LINKS[kind];
-      if(link){
-        window.open(link, '_blank', 'noopener,noreferrer');
-        addMsg('bot', "문의 링크가 열렸습니다.", "링크가 열리지 않으면 팝업 차단 설정을 확인해 주세요.");
-      } else {
-        copyText(templates[kind], "문의용 문구를 복사했습니다.", "문의 문구 복사에 실패했습니다.");
-      }
-    }
-
-    // --- CTA 영역 ---
+    // --- [NEW] 카카오톡 버튼이 포함된 심플한 CTA 구조 ---
     const cta = document.createElement('div');
     cta.className = 'cta';
 
     cta.innerHTML = `
-      <div class="t"><b style="color:var(--gold)">Next Step:</b> 가장 빠른 트리거를 먼저 정리하고, 나에게 맞는 입구를 선택해 주세요.</div>
+      <div class="t"><b style="color:var(--gold)">Next Step:</b> 가장 빠른 트리거를 먼저 정리하고, 내게 맞는 입구를 선택하세요.</div>
       <div class="simple-menu">
         <div class="s-menu-item">
           <span class="s-menu-kicker">ENTRY</span>
@@ -1638,6 +1471,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ctaActions = document.createElement('div');
     ctaActions.className = 'cta-actions';
 
+    // 카카오톡 노란색 버튼
     const kakaoBtn = document.createElement('a');
     kakaoBtn.className = 'btn-kakao';
     kakaoBtn.href = 'https://open.kakao.com/o/gEqI8Qki';
@@ -1651,17 +1485,11 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     ctaActions.appendChild(kakaoBtn);
 
-    const entryBtn = mkBtn('SPRING ENTRY', 'btn-gold', () => handleContact('entry'));
-    const sigBtn = mkBtn('WKND SIGNATURE', 'btn-main', () => handleContact('signature'));
-    const blackBtn = mkBtn('BLACK LABEL', 'btn-main btn-danger', () => handleContact('black'));
     const copyBtn = mkBtn('COPY SUMMARY', 'btn-main', () => {
-      copyText(summary, "요약을 클립보드에 복사했습니다.");
+      navigator.clipboard.writeText(summary)
+        .then(() => addMsg('bot', "요약을 클립보드에 복사했습니다.", "상담창에 바로 붙여넣어 주세요."))
+        .catch(() => addMsg('bot', "복사에 실패했습니다.", "브라우저 권한 이슈일 수 있습니다."));
     });
-
-    ctaActions.appendChild(kakaoBtn);
-    ctaActions.appendChild(entryBtn);
-    ctaActions.appendChild(sigBtn);
-    ctaActions.appendChild(blackBtn);
     ctaActions.appendChild(copyBtn);
 
     cta.appendChild(ctaActions);
@@ -1682,105 +1510,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => { i.style.width = w; }, 40);
       });
     }, 40);
-  }
-
-  function showEthics(){
-    clearPanel();
-
-    const e = ETHICS[runtime.eidx];
-    if(!e){
-      renderResult();
-      return;
-    }
-
-    addMsg('bot', `ETHICS ${runtime.eidx + 1}/${ETHICS.length}. ${e.text}`);
-
-    const card = document.createElement('div');
-    card.className = 'q-card';
-
-    const meta = document.createElement('div');
-    meta.className = 'q-meta';
-    meta.innerHTML = `<span>ETHICS</span><span>E${runtime.eidx + 1}/${ETHICS.length}</span>`;
-    card.appendChild(meta);
-
-    const qt = document.createElement('div');
-    qt.className = 'q-text';
-    qt.textContent = e.text;
-    card.appendChild(qt);
-
-    if(e.kind === 'single'){
-      const opts = document.createElement('div');
-      opts.className = 'options-grid';
-
-      e.options.forEach(opt => {
-        const b = document.createElement('button');
-        b.className = 'opt-btn';
-        b.type = 'button';
-        b.innerHTML = `
-          <div class="opt-left">
-            <span class="opt-k">${opt.k}.</span>
-            <span class="opt-t">${opt.t}</span>
-          </div>
-          <div class="opt-right">OK</div>
-        `;
-        b.addEventListener('click', () => {
-          runtime.ethicsAns[e.id] = opt.k;
-          addUser(`${opt.k}. ${opt.t}`);
-          runtime.eidx += 1;
-          showEthics();
-        });
-        opts.appendChild(b);
-      });
-
-      card.appendChild(opts);
-    }
-
-    else if(e.kind === 'check'){
-      const list = document.createElement('div');
-      list.className = 'options-grid';
-
-      const selected = {};
-      const checks = e.checks || [];
-
-      checks.forEach((t, i) => {
-        const b = document.createElement('button');
-        b.className = 'opt-btn';
-        b.type = 'button';
-        b.innerHTML = `
-          <div class="opt-left">
-            <span class="opt-k">☐</span>
-            <span class="opt-t">${t}</span>
-          </div>
-          <div class="opt-right">CHECK</div>
-        `;
-        b.addEventListener('click', () => {
-          selected[i] = !selected[i];
-          b.classList.toggle('selected', !!selected[i]);
-          b.querySelector('.opt-k').textContent = selected[i] ? '☑' : '☐';
-          submit.disabled = !checks.every((_, j) => !!selected[j]);
-        });
-        list.appendChild(b);
-      });
-
-      card.appendChild(list);
-
-      const bar = document.createElement('div');
-      bar.className = 'action-bar';
-
-      const submit = mkBtn('GATE PASS', 'btn-main', () => {
-        runtime.ethicsAns[e.id] = checks.map((_, j) => !!selected[j]);
-        addUser("확인 완료: 동의 / 배려 / 현실 OK");
-        runtime.eidx += 1;
-        showEthics();
-      });
-
-      submit.disabled = true;
-      bar.appendChild(submit);
-      bar.appendChild(mkBtn('RESET', 'btn-main btn-danger', () => start()));
-      card.appendChild(bar);
-    }
-
-    panel.appendChild(card);
   }
 
   function dismissIntro(){
